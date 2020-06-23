@@ -58,7 +58,34 @@ def load_data(data_dir):
     be a list of integer labels, representing the categories for each of the
     corresponding `images`.
     """
-    raise NotImplementedError
+
+    print(f'Loading images from dataset in directory "{data_dir}"')
+
+    images = []
+    labels = []
+
+    # Iterate through sign folders in directory:
+    for foldername in os.listdir(data_dir):
+        # Error Checking Data Folder
+        try:
+            int(foldername)
+        except ValueError:
+            print("Warning! Non-integer folder name in data directory! Skipping...")
+            continue
+    # Iterate through images in each folder
+        for filename in os.listdir(os.path.join(data_dir, foldername)):
+            # Open each image, save np array and label to lists
+            img = cv2.imread(os.path.join(data_dir, foldername, filename))
+            images.append(img)
+            labels.append(int(foldername))
+
+    # Check number of Images Matches Number of Labels:
+    if len(images) != len(labels):
+        sys.exit('Error when loading data, number of images did not match number of labels!')
+    else:
+        print(f'{len(images)}, {len(labels)} labelled images loaded successfully from dataset!')
+
+    return (images, labels)
 
 
 def get_model():
