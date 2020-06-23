@@ -74,8 +74,11 @@ def load_data(data_dir):
             continue
     # Iterate through images in each folder
         for filename in os.listdir(os.path.join(data_dir, foldername)):
-            # Open each image, save np array and label to lists
+            # Open each image and resize to be IMG_WIDTH X IMG HEIGHT
             img = cv2.imread(os.path.join(data_dir, foldername, filename))
+            img = cv2.resize(img, (IMG_WIDTH, IMG_HEIGHT))
+
+            # Append Resized Image and its label to lists
             images.append(img)
             labels.append(int(foldername))
 
