@@ -103,20 +103,21 @@ def get_model():
 
     # Create the Neural Network Model using keras:
     model = tf.keras.models.Sequential([
-    tf.keras.layers.Conv2D(
-        64, (3, 3), activation="relu", input_shape=(IMG_WIDTH, IMG_HEIGHT, 3)
-    ),
+
+    # Add 2 sequential 64 filter, 3x3 Convolutional Layers Followed by 2x2 Pooling
+    tf.keras.layers.Conv2D(64, (3, 3), activation="relu", input_shape=(IMG_WIDTH, IMG_HEIGHT, 3)),
     tf.keras.layers.MaxPooling2D(pool_size=(2, 2)),
-    tf.keras.layers.Conv2D(
-        64, (3, 3), activation="relu"
-    ),
+    tf.keras.layers.Conv2D(64, (3, 3), activation="relu"),
     tf.keras.layers.MaxPooling2D(pool_size=(2, 2)),
-    tf.keras.layers.Conv2D(
-        64, (3, 3), activation="relu", input_shape=(IMG_WIDTH, IMG_HEIGHT, 3)
-    ),
-    tf.keras.layers.MaxPooling2D(pool_size=(2, 2)),
+
+    # Flatten layers
     tf.keras.layers.Flatten(),
+
+    # Add A Dense Hidden layer with 512 units and 50% dropout
     tf.keras.layers.Dense(512, activation="relu"),
+    tf.keras.layers.Dropout(0.5),
+
+    # Add Dense Output layer with 43 output units
     tf.keras.layers.Dense(NUM_CATEGORIES, activation="softmax")
     ])
 
