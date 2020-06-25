@@ -11,7 +11,7 @@ labels = []
 
 data_dir = 'gtsrb-small'
 
- # Iterate through sign folders in directory:
+# Iterate through sign folders in directory:
 for foldername in os.listdir(data_dir):
     try:
       int(foldername)
@@ -23,6 +23,9 @@ for foldername in os.listdir(data_dir):
         # Open each image, save np array and label to lists
         img = cv2.imread(os.path.join(data_dir, foldername, filename))
         images.append(img)
+        # Normalise image pixel intensities:
+        #img=img/255
+        print(img.max())
         labels.append(int(foldername))
 
 print(len(images), len(labels))
